@@ -3,6 +3,8 @@ import React, { act, useEffect, useState } from 'react'
 import { ClipLoader } from 'react-spinners';
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowCircleDown } from "react-icons/fa";
 
 import ProductsList from '../ProductsList/ProductsList';
 import Categories from '../Categories/Categories';
@@ -17,6 +19,7 @@ import { usePagenation } from '../Context/PaginationContext';
 function Home() {
   const [searchInputValue,setSearchInputvalue]=useState("")//search input state
   const [productsData, setProductsData]=useState([]);//products data state
+  const [sortProductsArr,setSortProductsArr]=useState(0);//sorting the array state
   const [categoriesData, setCategoriesData]=useState([]);//categories data state
   const [category,setCategory]=useState("All categories");//setCategory state 
   const {pageNum,setPageNum,pageSize}=usePagenation();
@@ -52,7 +55,7 @@ function Home() {
 
    
 
-    const object=basicOps(productsData,category,pageSize,pageNum)
+    const object=basicOps(productsData,category,pageSize,pageNum,sortProductsArr)
     const filteredCategorizedGroupByArr=object.paginatedProducts
     const totalPages=object.totalPages
 
@@ -64,6 +67,10 @@ function Home() {
         onChange={(e)=>setSearchInputvalue(e.target.value)}
         />
         <Categories categoriesData={categoriesData} setCategory={setCategory} />
+        <div className='arrows-container'>
+              <FaArrowCircleUp  style={{color:"black"}} size={30} onClick={()=>{setSortProductsArr(1)}}/>
+              <FaArrowCircleDown style={{color:"black"}} size={30} onClick={()=>{setSortProductsArr(-1)}}/>
+        </div>
       </header>
       <div className='products-container'>
       {filteredCategorizedGroupByArr.length===0? <LoaderExample />:<ProductsList productsData={filteredCategorizedGroupByArr} searchInputValue={searchInputValue}/>}

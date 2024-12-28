@@ -8,9 +8,9 @@ function Categories(props) {
     const {setPageNum}=usePagenation();
         return (
             <div className='categories-container'>
+            <ul className='category-wrapper'>
             <button type="button" className='category-button' onClick={()=>{setCategory ("All categories"),setPageNum(1)}}>All Categories
             </button>
-            <ul className='category-wrapper'>
                 {categoriesData.map(eachCategory=>{
                 return <li key={eachCategory}>
                     <button onClick={()=>{setCategory(eachCategory),setPageNum(1)}} className='category-button'>{eachCategory}</button></li>

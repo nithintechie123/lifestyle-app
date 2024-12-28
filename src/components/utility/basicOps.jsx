@@ -1,6 +1,16 @@
-const basicOps=(productsData,category,pageSize,pageNum)=>{
+const basicOps=(productsData,category,pageSize,pageNum,sortProductsArr)=>{
 
-    let filteredCategorizedGroupByArr=productsData
+  let filterdSortedProductsArr=productsData;
+  //arranging the product in asce and desc
+  if(sortProductsArr!=0){
+    if (sortProductsArr==1){
+      filterdSortedProductsArr=filterdSortedProductsArr.sort(incComparator)
+    }else{
+      filterdSortedProductsArr=filterdSortedProductsArr.sort(decComparator)
+    }
+  }
+
+    let filteredCategorizedGroupByArr=filterdSortedProductsArr
   //filtered the products data based on the current category
   if(category!="All categories"){
     filteredCategorizedGroupByArr=productsData.filter(product=>product.category===category)
@@ -15,5 +25,24 @@ const basicOps=(productsData,category,pageSize,pageNum)=>{
   return {paginatedProducts,totalPages}
 
 }
+
+//helper function to compare product price in ascending order
+function incComparator(product1,product2){
+  if(product1.price > product2.price){
+    return 1
+  }else{
+    return -1
+  }
+}
+
+//helper function to compare product price in descending order
+function decComparator(product1,product2){
+  if(product1.price < product2.price){
+    return 1
+  }else{
+    return -1
+  }
+}
+
 
 export default  basicOps
